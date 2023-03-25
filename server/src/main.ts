@@ -30,6 +30,7 @@ export interface ChatMessage {
     name: string;
     avatar: string;
   };
+  timestamp: string;
 }
 
 // whenever a user connects on port 3000 via
