@@ -1,6 +1,7 @@
 <script lang="ts">
   import { pixelArt } from "@dicebear/collection";
   import { createAvatar } from "@dicebear/core";
+  import { fade, slide } from "svelte/transition";
   import type { ChatMessage } from "../app";
 
 
@@ -10,6 +11,16 @@
   export let profileImg: string;
 
   let promptTextField: HTMLInputElement;
+
+  export const scrollToBottom = () => {
+    promptContainer.scrollTo({
+      left: 0,
+      behavior: "smooth",
+      // infinity
+      // top: 0
+      top:0,
+    });
+  };
 
   let promptContainer: HTMLElement;
 </script>
@@ -36,11 +47,14 @@
     </div>
   </div>
   <div
-    class=" flex flex-col mt-auto overflow-scroll"
+    class="mt-auto overflow-y-scroll flex flex-col-reverse"
     bind:this={promptContainer}
   >
     {#each messages as message}
-      <div class="flex px-4 py-4">
+      <div class="flex px-4 py-4" transition:slide={{
+        axis: "y",
+        
+      }}>
         <div class="h-[40px] w-[40px] rounded-md bg-gray-300 mr-2" >
           <img src={message.profile.avatar} alt={message.profile.name}/>
 
@@ -50,22 +64,23 @@
           <div>{message.prompt}</div>
         </div>
       </div>
+      
+
     {/each}
+    <div class="h-[120px]"></div>
+ 
   </div>
-  <div class="pb-4 px-4">
-    <div class="h-[2px] bg-gray-300 mb-4" />
+  <div class="py-4 px-4 bottom-0 w-full bg-gray-100" >
     <form
       on:submit={() => {
         onSubmit(text);
-        promptContainer.scrollTo({
-          left: 0,
-          top: promptContainer.scrollHeight - promptContainer.clientHeight,
-          behavior: "smooth",
-        });
+        
         text = "";
         setTimeout(() => {
           promptTextField.focus();
+          scrollToBottom()
         }, 100);
+        
       }}
     >
       <input

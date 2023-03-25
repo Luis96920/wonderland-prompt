@@ -9,6 +9,7 @@
 
   let textfield = "";
   let username = generateUsername();
+  let scrollToBottom: () => void;
   let profileImage = createAvatar(pixelArt, {
     seed: crypto.randomUUID(),
   }).toDataUriSync();
@@ -23,11 +24,16 @@
     io.on("chat_messages", (nMessages: ChatMessage[]) => {
       console.log("RECIEVED CHAT MESSAGES");
       messages = nMessages;
+      setTimeout(() => {
+        scrollToBottom();
+
+      }, 500);
     });
     io.on("chat_message", (message: ChatMessage) => {
       // Listen to the message event
       console.log("RECIEVED CHAT MESSAGE");
-      messages = [...messages, message];
+      messages = [message,...messages, ];
+      messages = messages.slice(0, 100);
       console.log("Message: ", message);
     });
     io.on("name", (name) => {
@@ -55,7 +61,7 @@
 <div class="sm:grid-cols-[7fr_3fr] grid h-[100vh]">
   <div class="bg-black" />
   <div class="bg-gray-200 h-full">
-    <Chat onSubmit={sendMessage} bind:messages bind:profileImg={profileImage}/>
+    <Chat onSubmit={sendMessage} bind:messages bind:profileImg={profileImage} {scrollToBottom}/>
   </div>
   <!-- 
   
