@@ -28,11 +28,13 @@ app.get("/", (req: any, res: any) => {
   res.send("Hello World!");
 });
 
+
 export interface ChatMessage {
   prompt: string;
   profile: {
     name: string;
     avatar: string;
+    userId: string;
   };
   timestamp: string;
 }
@@ -52,37 +54,37 @@ io.on("connection", function (socket: any) {
     messages = messages.slice(0, 100);
     console.log("Emitting messages: " + messages);
     io.emit("chat_message", msg);
-    if(!loading){
-    loading = true;
-    io.emit("loading", true);
-    fetch("http://127.0.0.1:1978/iterate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        prompt: msg.prompt,
-        img: img,
-      }),
-    })
-      .then((res)=>{
-        if(res.ok){
-          return res
-        } else {
-          throw new Error("Something went wrong ai side")
-        }
+    if (!loading) {
+      loading = true;
+      io.emit("loading", true);
+      fetch("http://127.0.0.1:1978/iterate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt: msg.prompt,
+          img: img,
+        }),
       })
-      .then((res) => res.text())
-      .then((res) => {
-        img = res;
-        io.emit("ai_image", res);
-        loading = false;
-        io.emit("loading", false);
-      }).catch((err) => {
-        loading = false;
-        io.emit("loading", false);
-        console.log("ERR", err);
-      });
+        .then((res) => {
+          if (res.ok) {
+            return res
+          } else {
+            throw new Error("Something went wrong ai side")
+          }
+        })
+        .then((res) => res.text())
+        .then((res) => {
+          img = res;
+          io.emit("ai_image", res);
+          loading = false;
+          io.emit("loading", false);
+        }).catch((err) => {
+          loading = false;
+          io.emit("loading", false);
+          console.log("ERR", err);
+        });
     }
   });
 });

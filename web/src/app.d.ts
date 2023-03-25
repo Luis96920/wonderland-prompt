@@ -16,6 +16,7 @@ export interface ChatMessage {
   profile: {
     name: string;
     avatar: string;
+    userId: string;
   };
   timestamp: string;
 }

@@ -10,6 +10,7 @@
   let textfield = "";
   let img: string | undefined;
   let username = generateUsername();
+  let userId: string;
   let scrollToBottom: () => void;
   let profileImage = createAvatar(pixelArt, {
     seed: Math.random().toString(36).substring(2, 15),
@@ -22,24 +23,28 @@
     // Access localStorage within onMount
     localStorage = window.localStorage;
 
-    // Check if there's a saved username and profileImage in localStorage
+    // Check if there's a saved username and profileImage and userId in localStorage
     if (
       localStorage.getItem("username") &&
-      localStorage.getItem("profileImage")
+      localStorage.getItem("profileImage") &&
+      localStorage.getItem("userId")
     ) {
       // If they exist, retrieve them from localStorage
       username = localStorage.getItem("username")!;
       profileImage = localStorage.getItem("profileImage")!;
+      userId = localStorage.getItem("userId")!;
     } else {
-      // If not, generate a new username and profileImage
+      // If not, generate a new username, profileImage, and userId
       username = generateUsername();
       profileImage = createAvatar(pixelArt, {
         seed: Math.random().toString(36).substring(2, 15),
       }).toDataUriSync();
+      userId = Math.random().toString(36).substring(2, 9);
 
-      // Save the generated username and profileImage to localStorage
+      // Save the generated username, profileImage, and userId to localStorage
       localStorage.setItem("username", username);
       localStorage.setItem("profileImage", profileImage);
+      localStorage.setItem("userId", userId);
     }
   });
 
