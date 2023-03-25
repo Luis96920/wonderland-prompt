@@ -5,9 +5,9 @@ const app = express();
 app.set("port", process.env.PORT || 3000);
 
 // var http = require("http").Server(app);
-import { http } from "node:http";
+import http from "node:http";
 
-// let s =
+let s = http.createServer(app);
 // simple '/' endpoint sending a Hello World
 // response
 app.get("/", (req: any, res: any) => {
@@ -15,6 +15,6 @@ app.get("/", (req: any, res: any) => {
 });
 
 // start our simple server up on localhost:3000
-const server = http.listen(3000, function () {
+const server = s.listen(3000, function () {
     console.log("listening on *:3000");
 });
