@@ -23,5 +23,9 @@
 		"typescript": "^5.0.0",
 		"vite": "^4.2.0"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@dicebear/collection": "^5.3.4",
+		"@dicebear/core": "^5.3.4"
+	}
 }

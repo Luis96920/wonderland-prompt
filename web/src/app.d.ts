@@ -9,7 +9,7 @@ declare global {
   }
 }
 
-export {};
+export { };
 
 export interface ChatMessage {
   prompt: string;
