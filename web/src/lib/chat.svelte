@@ -3,7 +3,7 @@
   import { createAvatar } from "@dicebear/core";
   import {  slide } from "svelte/transition";
   import type { ChatMessage } from "../app";
-
+  export let loading: boolean;
   export let messages: ChatMessage[] = [];
   export let text: string = "";
   export let onSubmit: (message: string) => void;
@@ -81,7 +81,7 @@
     <div class="h-[120px]"></div>
  
   </div>
-  <div class="py-4 px-4 bottom-0 w-full bg-gray-100" >
+  <div class="py-4 px-4 bottom-0 w-full bg-gray-100 relative"   >
     <form
       on:submit={() => {
         onSubmit(text);
@@ -98,8 +98,18 @@
         placeholder="Make him a robot"
         class="w-full rounded-lg p-2 focus:outline-none"
         bind:this={promptTextField}
+        disabled={loading}
         bind:value={text}
       />
+
     </form>
+    {#if loading}
+        <div class="absolute w-full h-full backdrop-blur-sm top-0 overflow-clip">
+          <div class="flex justify-center items-center h-full">
+            <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900"></div>
+          </div>
+
+        </div>
+    {/if}
   </div>
 </div>

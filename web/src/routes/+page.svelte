@@ -6,7 +6,7 @@
   import { createAvatar } from "@dicebear/core";
   import { pixelArt } from "@dicebear/collection";
   import { generateUsername } from "unique-username-generator";
-
+  let loading = false;
   let textfield = "";
   let img: string|undefined;
   let username = generateUsername();
@@ -49,6 +49,10 @@
     io.on("connect", () => {
       console.log("Connected");
       setTimeout(() => {}, 500);
+    });
+    io.on("loading", (l: boolean) => {
+      console.log("RECIEVED LOADING");
+      loading = l;
     });
     io.on("ai_image", (image: string) => {
       console.log("RECIEVED AI IMAGE");
@@ -95,11 +99,11 @@
 <div class="sm:grid-cols-[7fr_3fr] grid h-[100vh]">
   <div class="bg-black">
     {#if img}
-    <img src={img} class="w-full h-full" alt="generated"/>
+    <img src={img} class="w-full h-[100vh]" alt="generated"/>
     {/if}
     </div>
   <div class="bg-gray-200 h-full">
-    <Chat onSubmit={sendMessage} bind:messages bind:profileImg={profileImage} {scrollToBottom}/>
+    <Chat onSubmit={sendMessage} bind:messages bind:profileImg={profileImage} {scrollToBottom} {loading}/>
   </div>
   <!-- 
   
