@@ -1,0 +1,25 @@
+{
+	"compilerOptions": {
+		"moduleResolution": "node",
+		"module": "esnext",
+		"lib": ["esnext", "DOM"],
+		"target": "esnext",
+		"importsNotUsedAsValues": "error",
+		"isolatedModules": true,
+		"resolveJsonModule": true,
+		"sourceMap": true,
+		"esModuleInterop": true,
+		"emitDecoratorMetadata": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
+		"allowJs": true,
+		"checkJs": true,
+		"experimentalDecorators": true,
+		"declaration": true,
+		"typeRoots": ["src/declarations.d.ts"],
+		"paths": {}
+	},
+	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.ts",],
+}

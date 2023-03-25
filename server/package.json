@@ -1,0 +1,31 @@
+{
+    "name": "Wonderland",
+    "version": "1.0.0",
+    "description": "A social experiment",
+    "main": "./.build/index.cjs",
+    "scripts": {
+      "build": "node esbuild.mjs",
+      "watch:build": "node esbuild.mjs --watchbuild",
+  
+      "start": "node ./.build/main.cjs",
+      "watch:start": "node esbuild.mjs --watchbuild --watchstart",
+  
+      "build:start": "node esbuild.mjs && node ./.build/main.cjs"
+    },
+    "author": "Jacob Zwang <zwang.jacob@gmail.com>",
+    "license": "ISC",
+    "dependencies": {
+      "@types/node": "^16.7.10",
+      "@typescript-eslint/eslint-plugin": "^4.29.3",
+      "@typescript-eslint/parser": "^4.29.3",
+      "chalk": "^4.1.2",
+      "dotenv": "^10.0.0",
+      "esbuild": "^0.12.24",
+      "eslint": "^7.32.0",
+      "eslint-config-prettier": "^8.3.0",
+      "minimist": "^1.2.5",
+      "prettier": "^2.3.2",
+      "typescript": "^4.4.2"
+    },
+    "type": "module"
+  }
