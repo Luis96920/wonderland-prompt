@@ -26,6 +26,7 @@
 	"type": "module",
 	"dependencies": {
 		"@dicebear/collection": "^5.3.4",
-		"@dicebear/core": "^5.3.4"
+		"@dicebear/core": "^5.3.4",
+		"unique-username-generator": "^1.1.3"
 	}
 }

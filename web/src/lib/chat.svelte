@@ -1,10 +1,13 @@
 <script lang="ts">
+  import { pixelArt } from "@dicebear/collection";
+  import { createAvatar } from "@dicebear/core";
   import type { ChatMessage } from "../app";
 
 
   export let messages: ChatMessage[] = [];
   export let text: string = "";
   export let onSubmit: (message: string) => void;
+  export let profileImg: string;
 
   let promptTextField: HTMLInputElement;
 
@@ -20,6 +23,14 @@
     <div>
       <h1 class=" font-bold">Wonderland</h1>
       <p class="text-sm text-gray-700">Generative. Imaginative. Collaborative.</p>
+    </div>
+    <div class="ml-auto">
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <img src={profileImg} class="h-[40px] w-[40px] rounded-md ml-auto bg-gray-300" alt="Profile" on:click={()=>{
+        profileImg = createAvatar(pixelArt, {
+          seed: crypto.randomUUID(),
+        }).toDataUriSync();
+      }} />
     </div>
       
     </div>
@@ -48,7 +59,7 @@
         onSubmit(text);
         promptContainer.scrollTo({
           left: 0,
-          top: promptContainer.scrollHeight,
+          top: promptContainer.scrollHeight - promptContainer.clientHeight,
           behavior: "smooth",
         });
         text = "";
