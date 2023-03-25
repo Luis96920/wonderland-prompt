@@ -1,5 +1,12 @@
-export default function main() {
-	console.log("Hello World! I'm Ben");
-}
+import express from "express";
 
-main();
+const app = express();
+
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
+app.listen(3000, () => {
+  console.log("Server started on port 3000");
+});
+
