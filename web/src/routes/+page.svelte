@@ -12,12 +12,18 @@
     io.on("connect", () => {
       console.log("Connected")
       setTimeout(() => {
-        alert("YAY CONNECTED");
 
       }, 500);
+
+
     });
+    io.on("chat_messages", (nMessages: string[])=>{
+      console.log("RECIEVED CHAT MESSAGES")
+      messages = nMessages;
+    })
     io.on("chat_message", (message: string) => {
       // Listen to the message event
+      console.log("RECIEVED CHAT MESSAGE")
       messages = [...messages, message];
       console.log("Message: ", message)
     });
@@ -27,58 +33,23 @@
     });
   });
 
-  function sendMessage() {
-    const message = textfield.trim();
+  function sendMessage(message: string) {
+   
     if (!message) return;
 
     textfield = "";
+    console.log("SENDING CHAT MESSAGE")
     io.emit("chat_message", message); // Send the message
   }
 </script>
 
 <div class="sm:grid-cols-[7fr_3fr] grid h-[100vh]">
   <div class="bg-black" />
-  <div class="bg-gray-200 h-full" />
-
-  <div class="h-screen w-screen bg-zinc-800">
-    <div class="h-full w-full max-w-md mx-auto bg-zinc-500 flex flex-col">
-      <header
-        class="px-6 py-4 border-b border-zinc-800 bg-zinc-700 text-white shrink-0 flex items-center justify-between"
-      >
-        <span class="font-bold text-xl">My Chat app</span>
-        <span>{username}</span>
-      </header>
-
-      <div class="h-full w-full p-4">
-        {#each messages as message}
-          <div
-            class="bg-zinc-300 rounded-xl rounded-tl-none px-4 py-3 my-4 w-fit"
-          >
-            <!-- <span class="flex items-center space-between gap-4">
-                            <b>{message.from}</b>
-                            <i>{message.time}</i>
-                        </span> -->
-            {message}
-          </div>
-        {/each}
-      </div>
-
-      <form
-        action="#"
-        on:submit|preventDefault={sendMessage}
-        class="px-6 py-4 border-t border-zinc-800 bg-zinc-700 text-white shrink-0 flex items-center"
-      >
-        <input
-          type="text"
-          bind:value={textfield}
-          placeholder="Type something..."
-          class="bg-transparent border-none px-4 py-3 w-full"
-        />
-        <button
-          type="submit"
-          class="shrink-0 border border-white rounded-lg px-4 py-3">Send</button
-        >
-      </form>
+  <div class="bg-gray-200 h-full" >
+    <Chat onSubmit={sendMessage} bind:messages />
     </div>
-  </div>
+<!-- 
+  
+    </div>
+  </div> -->
 </div>

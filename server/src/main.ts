@@ -33,10 +33,12 @@ app.get("/", (req: any, res: any) => {
 let messages = []
 io.on("connection", function (socket: any) {
     console.log("a user connected");
+    io.emit("chat_messages", messages)
     socket.on("chat_message", (msg: any) => {
       console.log("message: " + msg)
        messages = [...messages, msg]
        messages = messages.slice(-100)
+       console.log("Emitting messages: " + messages)
         io.emit("chat_message", msg)
 
     });

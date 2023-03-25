@@ -21,14 +21,17 @@
     bind:this={promptContainer}
   >
     {#each messages as message}
-      <div>
-        <div class="bg-gray-200 rounded-lg px-4 py-4">
-          {message}
+      <div class="flex px-4 py-4">
+        <div class="h-[40px] w-[40px] rounded-md bg-gray-300 mr-2"/>
+        <div class="flex flex-col">
+          <div class="text-gray-400 text-xs">Username</div>
+          <div>{message}</div>
+          
         </div>
       </div>
     {/each}
   </div>
-  <div class="p-4">
+  <div class="pb-4 px-4">
     <div class="h-[2px] bg-gray-300 mb-4" />
     <form
       on:submit={() => {
