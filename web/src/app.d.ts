@@ -17,4 +17,5 @@ export interface ChatMessage {
     name: string;
     avatar: string;
   };
+  timestamp: string;
 }

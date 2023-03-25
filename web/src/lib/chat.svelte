@@ -17,7 +17,7 @@
       behavior: "smooth",
       // infinity
       // top: 0
-      top:0,
+      top: 0,
     });
   };
 
@@ -62,36 +62,36 @@
     bind:this={promptContainer}
   >
     {#each messages as message}
-      <div class="flex px-4 py-4" transition:slide={{
-        axis: "y",
-        
-      }}>
-        <div class="h-[40px] w-[40px] rounded-md bg-gray-300 mr-2" >
-          <img src={message.profile.avatar} alt={message.profile.name}/>
-
-          </div>
+      <div
+        class="flex px-4 py-4"
+        transition:slide={{
+          axis: "y",
+        }}
+      >
+        <div class="h-[40px] w-[40px] rounded-md bg-gray-300 mr-2">
+          <img src={message.profile.avatar} alt={message.profile.name} />
+        </div>
         <div class="flex flex-col">
           <div class="text-gray-400 text-xs">{message.profile.name}</div>
           <div>{message.prompt}</div>
+          <div class="text-gray-400 text-xs opacity-50">
+            {new Date(message.timestamp).toLocaleTimeString()}
+          </div>
         </div>
       </div>
-      
-
     {/each}
-    <div class="h-[120px]"></div>
- 
+    <div class="h-[120px]" />
   </div>
-  <div class="py-4 px-4 bottom-0 w-full bg-gray-100 relative"   >
+  <div class="py-4 px-4 bottom-0 w-full bg-gray-100" >
     <form
       on:submit={() => {
         onSubmit(text);
-        
+
         text = "";
         setTimeout(() => {
           promptTextField.focus();
-          scrollToBottom()
+          scrollToBottom();
         }, 100);
-        
       }}
     >
       <input
