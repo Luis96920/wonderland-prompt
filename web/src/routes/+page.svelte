@@ -8,13 +8,13 @@
   import { generateUsername } from "unique-username-generator";
 
   let textfield = "";
+  let img: string|undefined;
   let username = generateUsername();
   let scrollToBottom: () => void;
   let profileImage = createAvatar(pixelArt, {
     seed: crypto.randomUUID(),
   }).toDataUriSync();
   
-
   // define local storage
   let localStorage: Storage;
 
@@ -49,6 +49,11 @@
     io.on("connect", () => {
       console.log("Connected");
       setTimeout(() => {}, 500);
+    });
+    io.on("ai_image", (image: string) => {
+      console.log("RECIEVED AI IMAGE");
+      img = image;
+      
     });
     io.on("chat_messages", (nMessages: ChatMessage[]) => {
       console.log("RECIEVED CHAT MESSAGES");
@@ -88,7 +93,11 @@
 </script>
 
 <div class="sm:grid-cols-[7fr_3fr] grid h-[100vh]">
-  <div class="bg-black" />
+  <div class="bg-black">
+    {#if img}
+    <img src={img} class="w-full h-full" alt="generated"/>
+    {/if}
+    </div>
   <div class="bg-gray-200 h-full">
     <Chat onSubmit={sendMessage} bind:messages bind:profileImg={profileImage} {scrollToBottom}/>
   </div>
