@@ -13,6 +13,35 @@
   let profileImage = createAvatar(pixelArt, {
     seed: crypto.randomUUID(),
   }).toDataUriSync();
+  
+
+  // define local storage
+  let localStorage: Storage;
+
+  onMount(() => {
+    // Access localStorage within onMount
+    localStorage = window.localStorage;
+
+    // Check if there's a saved username and profileImage in localStorage
+    if (
+      localStorage.getItem("username") &&
+      localStorage.getItem("profileImage")
+    ) {
+      // If they exist, retrieve them from localStorage
+      username = localStorage.getItem("username")!;
+      profileImage = localStorage.getItem("profileImage")!;
+    } else {
+      // If not, generate a new username and profileImage
+      username = generateUsername();
+      profileImage = createAvatar(pixelArt, {
+        seed: crypto.randomUUID(),
+      }).toDataUriSync();
+
+      // Save the generated username and profileImage to localStorage
+      localStorage.setItem("username", username);
+      localStorage.setItem("profileImage", profileImage);
+    }
+  });
 
   let messages: ChatMessage[] = [];
 
