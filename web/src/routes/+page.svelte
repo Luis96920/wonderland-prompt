@@ -8,13 +8,13 @@
   import { generateUsername } from "unique-username-generator";
 
   let textfield = "";
-  let img: string|undefined;
+  let img: string | undefined;
   let username = generateUsername();
   let scrollToBottom: () => void;
   let profileImage = createAvatar(pixelArt, {
     seed: crypto.randomUUID(),
   }).toDataUriSync();
-  
+
   // define local storage
   let localStorage: Storage;
 
@@ -53,20 +53,18 @@
     io.on("ai_image", (image: string) => {
       console.log("RECIEVED AI IMAGE");
       img = image;
-      
     });
     io.on("chat_messages", (nMessages: ChatMessage[]) => {
       console.log("RECIEVED CHAT MESSAGES");
       messages = nMessages;
       setTimeout(() => {
         scrollToBottom();
-
       }, 500);
     });
     io.on("chat_message", (message: ChatMessage) => {
       // Listen to the message event
       console.log("RECIEVED CHAT MESSAGE");
-      messages = [message,...messages, ];
+      messages = [message, ...messages];
       messages = messages.slice(0, 100);
       console.log("Message: ", message);
     });
@@ -82,24 +80,36 @@
     textfield = "";
     console.log("SENDING CHAT MESSAGE");
 
+    // Record the timestamp when the user submits the message
+    const timestamp = new Date();
+
     io.emit("chat_message", {
       prompt: message,
       profile: {
         name: username,
         avatar: profileImage,
       },
+      timestamp: timestamp.toISOString(),
     } as ChatMessage);
+
+    // Save the last time the user sent a message to localStorage
+    localStorage.setItem("lastMessageTime", timestamp.toISOString());
   }
 </script>
 
 <div class="sm:grid-cols-[7fr_3fr] grid h-[100vh]">
   <div class="bg-black">
     {#if img}
-    <img src={img} class="w-full h-full" alt="generated"/>
+      <img src={img} class="w-full h-full" alt="generated" />
     {/if}
-    </div>
+  </div>
   <div class="bg-gray-200 h-full">
-    <Chat onSubmit={sendMessage} bind:messages bind:profileImg={profileImage} {scrollToBottom}/>
+    <Chat
+      onSubmit={sendMessage}
+      bind:messages
+      bind:profileImg={profileImage}
+      {scrollToBottom}
+    />
   </div>
   <!-- 
   
