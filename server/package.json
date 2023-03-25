@@ -1,5 +1,5 @@
 {
-  "name": "Wonderland",
+  "name": "wonderland",
   "version": "1.0.0",
   "description": "A social experiment",
   "main": "./.build/index.cjs",
