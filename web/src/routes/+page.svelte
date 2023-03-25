@@ -5,10 +5,10 @@
   import type { ChatMessage } from "../app";
   import { createAvatar } from "@dicebear/core";
   import { pixelArt } from "@dicebear/collection";
+  import { generateUsername } from "unique-username-generator";
 
   let textfield = "";
-  let username = "myusername";
-
+  let username = generateUsername();
   let profileImage = createAvatar(pixelArt, {
     seed: crypto.randomUUID(),
   }).toDataUriSync();
