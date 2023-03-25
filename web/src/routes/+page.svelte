@@ -8,10 +8,36 @@
   import { generateUsername } from "unique-username-generator";
 
   let textfield = "";
-  let username = generateUsername();
-  let profileImage = createAvatar(pixelArt, {
-    seed: crypto.randomUUID(),
-  }).toDataUriSync();
+  let username: string;
+  let profileImage: string;
+
+  // define local storage
+  let localStorage: Storage;
+
+  onMount(() => {
+    // Access localStorage within onMount
+    localStorage = window.localStorage;
+
+    // Check if there's a saved username and profileImage in localStorage
+    if (
+      localStorage.getItem("username") &&
+      localStorage.getItem("profileImage")
+    ) {
+      // If they exist, retrieve them from localStorage
+      username = localStorage.getItem("username")!;
+      profileImage = localStorage.getItem("profileImage")!;
+    } else {
+      // If not, generate a new username and profileImage
+      username = generateUsername();
+      profileImage = createAvatar(pixelArt, {
+        seed: crypto.randomUUID(),
+      }).toDataUriSync();
+
+      // Save the generated username and profileImage to localStorage
+      localStorage.setItem("username", username);
+      localStorage.setItem("profileImage", profileImage);
+    }
+  });
 
   let messages: ChatMessage[] = [];
 
@@ -55,7 +81,7 @@
 <div class="sm:grid-cols-[7fr_3fr] grid h-[100vh]">
   <div class="bg-black" />
   <div class="bg-gray-200 h-full">
-    <Chat onSubmit={sendMessage} bind:messages bind:profileImg={profileImage}/>
+    <Chat onSubmit={sendMessage} bind:messages bind:profileImg={profileImage} />
   </div>
   <!-- 
   
