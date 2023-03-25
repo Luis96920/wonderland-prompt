@@ -2,15 +2,24 @@ import PIL
 import requests
 import torch
 from diffusers import StableDiffusionInstructPix2PixPipeline, EulerAncestralDiscreteScheduler
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, abort
 from PIL import Image
 from binascii import a2b_base64
 import io
+import base64
+import io
+from PIL import Image
+
+
+def pillow_image_to_base64_string(img):
+    buffered = io.BytesIO()
+    img.save(buffered, format="JPEG")
+    return base64.b64encode(buffered.getvalue()).decode("utf-8")
 
 model_id = "timbrooks/instruct-pix2pix"
-# device = "mps"
+device = "mps"
 pipe = StableDiffusionInstructPix2PixPipeline.from_pretrained(model_id, safety_checker=None)
-# pipe.to(device)
+pipe.to(device)
 pipe.scheduler = EulerAncestralDiscreteScheduler.from_config(pipe.scheduler.config)
 
 
@@ -43,15 +52,19 @@ def predict():
     prompt = json["prompt"]
     img = json["img"]
     if img is None:
-        return jsonify({"message": "No image"})
+        abort(500)
     if prompt is None:
-        return jsonify({"message": "No prompt"})
+        abort(500)
+
     img = dataUriToImage(img)
     images = pipe(prompt, image=img, num_inference_steps=10, image_guidance_scale=1).images
-    images[0].show()
-    img.show()
+    
+    # img.show()
+    # images[0].show()
 
-    return jsonify({"img": "Done"})
+    # return img data url
+    return 'data:image/jpeg;base64,'+pillow_image_to_base64_string(images[0])
+
 
     # prompt = "make him wear sunglasses"
     # images = pipe(prompt, image=image, num_inference_steps=10, image_guidance_scale=1).images

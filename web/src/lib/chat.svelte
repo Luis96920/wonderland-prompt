@@ -1,7 +1,7 @@
 <script lang="ts">
   import { pixelArt } from "@dicebear/collection";
   import { createAvatar } from "@dicebear/core";
-  import { fade, slide } from "svelte/transition";
+  import {  slide } from "svelte/transition";
   import type { ChatMessage } from "../app";
 
   export let messages: ChatMessage[] = [];
