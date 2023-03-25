@@ -2,10 +2,12 @@ import PIL
 import requests
 import torch
 from diffusers import StableDiffusionInstructPix2PixPipeline, EulerAncestralDiscreteScheduler
+from flask import Flask, request, jsonify
 
 model_id = "timbrooks/instruct-pix2pix"
-pipe = StableDiffusionInstructPix2PixPipeline.from_pretrained(model_id, torch_dtype=torch.float16, safety_checker=None)
-pipe.to("mps")
+device = "mps"
+pipe = StableDiffusionInstructPix2PixPipeline.from_pretrained(model_id, safety_checker=None)
+pipe.to(device)
 pipe.scheduler = EulerAncestralDiscreteScheduler.from_config(pipe.scheduler.config)
 
 URL = "https://raw.githubusercontent.com/timothybrooks/instruct-pix2pix/main/imgs/example.jpg"
@@ -16,6 +18,9 @@ def download_image(url):
     return image
 image = download_image(URL)
 
-prompt = "turn him into cyborg"
+print("Image:")
+prompt = "make him wear sunglasses"
 images = pipe(prompt, image=image, num_inference_steps=10, image_guidance_scale=1).images
-images[0]
+
+print("MADE IT")
+images[0].show()

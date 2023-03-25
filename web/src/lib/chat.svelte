@@ -14,9 +14,14 @@
 <div class="flex flex-col h-[100vh] relative">
   <div>
     <div
-      class="p-4 border-b border-b-gray-300 backdrop-blur-lg absolute w-full bg-white bg-opacity-20"
+      class="p-4 border-b border-b-gray-300 backdrop-blur-lg absolute w-full bg-white bg-opacity-20 flex"
     >
-      <h1>Wonderland</h1>
+    <img src="/img.png" height="40px" width="40px" class="h-[40px] w-[40px]" alt="Logo"/>
+    <div>
+      <h1 class=" font-bold">Wonderland</h1>
+      <p class="text-sm text-gray-700">Generative. Imaginative. Collaborative.</p>
+    </div>
+      
     </div>
   </div>
   <div
