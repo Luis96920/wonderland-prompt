@@ -2,7 +2,12 @@
 	"compilerOptions": {
 		"moduleResolution": "node",
 		"module": "esnext",
-		"lib": ["esnext", "DOM"],
+		"lib": [
+			"esnext"
+		],
+		"types": [
+			"node"
+		],
 		"target": "esnext",
 		"importsNotUsedAsValues": "error",
 		"isolatedModules": true,
@@ -18,8 +23,14 @@
 		"checkJs": true,
 		"experimentalDecorators": true,
 		"declaration": true,
-		"typeRoots": ["src/declarations.d.ts"],
+		"typeRoots": [
+			"src/declarations.d.ts"
+		],
 		"paths": {}
 	},
-	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.ts",],
+	"include": [
+		"src/**/*.d.ts",
+		"src/**/*.js",
+		"src/**/*.ts",
+	],
 }
