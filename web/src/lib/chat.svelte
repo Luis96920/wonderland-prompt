@@ -1,8 +1,10 @@
 <script lang="ts">
   import { pixelArt } from "@dicebear/collection";
   import { createAvatar } from "@dicebear/core";
-  import {  slide } from "svelte/transition";
+  import { slide } from "svelte/transition";
   import type { ChatMessage } from "../app";
+  import * as timeago from "timeago.js";
+
   export let loading: boolean;
   export let messages: ChatMessage[] = [];
   export let text: string = "";
@@ -74,8 +76,9 @@
         <div class="flex flex-col">
           <div class="text-gray-400 text-xs">{message.profile.name}</div>
           <div>{message.prompt}</div>
+          <!-- this is where a timestamp is displayed-->
           <div class="text-gray-400 text-xs opacity-50">
-            {new Date(message.timestamp).toLocaleTimeString()}
+            {timeago.format(new Date(message.timestamp))}
           </div>
         </div>
       </div>
@@ -101,15 +104,15 @@
         disabled={loading}
         bind:value={text}
       />
-
     </form>
     {#if loading}
-        <div class="absolute w-full h-full backdrop-blur-sm top-0 overflow-clip">
-          <div class="flex justify-center items-center h-full">
-            <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900"></div>
-          </div>
-
+      <div class="absolute w-full h-full backdrop-blur-sm top-0 overflow-clip">
+        <div class="flex justify-center items-center h-full">
+          <div
+            class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900"
+          />
         </div>
+      </div>
     {/if}
   </div>
 </div>

@@ -27,6 +27,7 @@
 	"dependencies": {
 		"@dicebear/collection": "^5.3.4",
 		"@dicebear/core": "^5.3.4",
+		"timeago.js": "^4.0.2",
 		"unique-username-generator": "^1.1.3"
 	}
 }

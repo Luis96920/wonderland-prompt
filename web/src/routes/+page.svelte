@@ -108,7 +108,13 @@
     {/if}
   </div>
   <div class="bg-gray-200 h-full">
-    <Chat onSubmit={sendMessage} bind:messages bind:profileImg={profileImage} {scrollToBottom} {loading}/>
+    <Chat
+      onSubmit={sendMessage}
+      bind:messages
+      bind:profileImg={profileImage}
+      {scrollToBottom}
+      {loading}
+    />
   </div>
   <!-- 
   
