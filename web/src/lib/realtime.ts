@@ -1,6 +1,6 @@
 // src/lib/realtime.js
 import ioClient from "socket.io-client";
-const ENDPOINT = "http://localhost:3000";
+const ENDPOINT = "http://127.0.0.1:3000";
 
 const socket = ioClient(ENDPOINT)
 

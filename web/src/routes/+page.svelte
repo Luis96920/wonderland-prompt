@@ -11,11 +11,15 @@
   onMount(() => {
     io.on("connect", () => {
       console.log("Connected")
-      alert("YAY CONNECTED");
+      setTimeout(() => {
+        alert("YAY CONNECTED");
+
+      }, 500);
     });
-    io.on("message", (message: string) => {
+    io.on("chat_message", (message: string) => {
       // Listen to the message event
       messages = [...messages, message];
+      console.log("Message: ", message)
     });
     io.on("name", (name) => {
       // Another listener for the name:
@@ -28,7 +32,7 @@
     if (!message) return;
 
     textfield = "";
-    io.emit("message", message); // Send the message
+    io.emit("chat_message", message); // Send the message
   }
 </script>
 
