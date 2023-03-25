@@ -104,7 +104,7 @@
 <div class="sm:grid-cols-[7fr_3fr] grid h-[100vh]">
   <div class="bg-black">
     {#if img}
-      <img src={img} class="w-full h-full" alt="generated" />
+      <img src={img} class="w-full h-[100vh]" alt="generated" />
     {/if}
   </div>
   <div class="bg-gray-200 h-full">

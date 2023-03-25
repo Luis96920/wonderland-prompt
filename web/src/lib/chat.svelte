@@ -82,7 +82,7 @@
     {/each}
     <div class="h-[120px]" />
   </div>
-  <div class="py-4 px-4 bottom-0 w-full bg-gray-100" >
+  <div class="py-4 px-4 bottom-0 w-full bg-gray-100 relative" >
     <form
       on:submit={() => {
         onSubmit(text);
