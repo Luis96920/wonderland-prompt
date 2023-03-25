@@ -28,9 +28,17 @@ app.get("/", (req: any, res: any) => {
     res.sendFile(path.resolve("./client/index.html"));
 });
 
+export interface ChatMessage {
+  prompt: string;
+  profile: {
+    name: string;
+    avatar: string;
+  };
+}
+
 // whenever a user connects on port 3000 via
 // a websocket, log that a user has connected
-let messages = []
+let messages:ChatMessage[] = []
 io.on("connection", function (socket: any) {
     console.log("a user connected");
     io.emit("chat_messages", messages)

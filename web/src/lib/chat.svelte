@@ -1,5 +1,8 @@
 <script lang="ts">
-  export let messages: string[] = [];
+  import type { ChatMessage } from "../app";
+
+
+  export let messages: ChatMessage[] = [];
   export let text: string = "";
   export let onSubmit: (message: string) => void;
 
@@ -22,11 +25,13 @@
   >
     {#each messages as message}
       <div class="flex px-4 py-4">
-        <div class="h-[40px] w-[40px] rounded-md bg-gray-300 mr-2"/>
+        <div class="h-[40px] w-[40px] rounded-md bg-gray-300 mr-2" >
+          <img src={message.profile.avatar} alt={message.profile.name}/>
+
+          </div>
         <div class="flex flex-col">
-          <div class="text-gray-400 text-xs">Username</div>
-          <div>{message}</div>
-          
+          <div class="text-gray-400 text-xs">{message.profile.name}</div>
+          <div>{message.prompt}</div>
         </div>
       </div>
     {/each}
