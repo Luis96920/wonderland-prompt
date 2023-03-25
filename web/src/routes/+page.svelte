@@ -3,9 +3,15 @@
   import { io } from "../lib/realtime";
   import { onMount } from "svelte";
   import type { ChatMessage } from "../app";
+  import { createAvatar } from "@dicebear/core";
+  import { pixelArt } from "@dicebear/collection";
+  import { generateUsername } from "unique-username-generator";
 
   let textfield = "";
-  let username = "myusername";
+  let username = generateUsername();
+  let profileImage = createAvatar(pixelArt, {
+    seed: crypto.randomUUID(),
+  }).toDataUriSync();
 
   let messages: ChatMessage[] = [];
 
@@ -35,11 +41,12 @@
 
     textfield = "";
     console.log("SENDING CHAT MESSAGE");
+
     io.emit("chat_message", {
       prompt: message,
       profile: {
         name: username,
-        avatar: "https://api.dicebear.com/5.x/pixel-art/svg?seed=Jasmine",
+        avatar: profileImage,
       },
     } as ChatMessage);
   }
