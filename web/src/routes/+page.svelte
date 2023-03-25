@@ -6,7 +6,7 @@
   import { createAvatar } from "@dicebear/core";
   import { pixelArt } from "@dicebear/collection";
   import { generateUsername } from "unique-username-generator";
-
+  let loading = false;
   let textfield = "";
   let img: string | undefined;
   let username = generateUsername();
@@ -49,6 +49,10 @@
     io.on("connect", () => {
       console.log("Connected");
       setTimeout(() => {}, 500);
+    });
+    io.on("loading", (l: boolean) => {
+      console.log("RECIEVED LOADING");
+      loading = l;
     });
     io.on("ai_image", (image: string) => {
       console.log("RECIEVED AI IMAGE");
@@ -109,6 +113,7 @@
       bind:messages
       bind:profileImg={profileImage}
       {scrollToBottom}
+      {loading}
     />
   </div>
   <!-- 

@@ -7,6 +7,7 @@ import fetch from "node-fetch";
 import baseImg from './baseImg';
 
 let img = baseImg;
+let loading = false;
 
 const app = express();
 app.set("port", process.env.PORT || 3000);
@@ -42,12 +43,18 @@ let messages: ChatMessage[] = [];
 io.on("connection", function (socket: any) {
   console.log("a user connected");
   io.emit("chat_messages", messages);
+  io.emit("ai_image", img);
+  io.emit("loading", loading);
+
   socket.on("chat_message", (msg: any) => {
     console.log("message: " + msg);
     messages = [msg, ...messages];
     messages = messages.slice(0, 100);
     console.log("Emitting messages: " + messages);
     io.emit("chat_message", msg);
+    if(!loading){
+    loading = true;
+    io.emit("loading", true);
     fetch("http://127.0.0.1:1978/iterate", {
       method: "POST",
       headers: {
@@ -69,9 +76,14 @@ io.on("connection", function (socket: any) {
       .then((res) => {
         img = res;
         io.emit("ai_image", res);
+        loading = false;
+        io.emit("loading", false);
       }).catch((err) => {
+        loading = false;
+        io.emit("loading", false);
         console.log("ERR", err);
       });
+    }
   });
 });
 
