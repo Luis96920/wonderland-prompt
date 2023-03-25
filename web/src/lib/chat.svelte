@@ -52,7 +52,7 @@
           alt="Profile"
           on:click={() => {
             profileImg = createAvatar(pixelArt, {
-              seed: crypto.randomUUID(),
+              seed: Math.random().toString(36).substring(2, 15),
             }).toDataUriSync();
           }}
         />

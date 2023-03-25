@@ -12,7 +12,7 @@
   let username = generateUsername();
   let scrollToBottom: () => void;
   let profileImage = createAvatar(pixelArt, {
-    seed: crypto.randomUUID(),
+    seed: Math.random().toString(36).substring(2, 15),
   }).toDataUriSync();
 
   // define local storage
@@ -34,7 +34,7 @@
       // If not, generate a new username and profileImage
       username = generateUsername();
       profileImage = createAvatar(pixelArt, {
-        seed: crypto.randomUUID(),
+        seed: Math.random().toString(36).substring(2, 15),
       }).toDataUriSync();
 
       // Save the generated username and profileImage to localStorage
@@ -104,7 +104,7 @@
 <div class="sm:grid-cols-[7fr_3fr] grid h-[100vh]">
   <div class="bg-black">
     {#if img}
-      <img src={img} class="w-full h-[100vh]" alt="generated" />
+      <img src={img} class="w-full h-[100vh] object-contain" alt="generated" />
     {/if}
   </div>
   <div class="bg-gray-200 h-full">

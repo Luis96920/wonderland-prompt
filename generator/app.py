@@ -36,6 +36,7 @@ def dataUriToImage(dataUri: str):
     image = Image.open(io.BytesIO(data))
     image = image.convert("RGB")
     image = image.resize((512, 512))
+
     return image
 
 
@@ -44,7 +45,11 @@ def hello():
     return "Welcome to our python server"
 
 
-
+def addWatermark(image):
+    watermark = Image.open("img.png")
+    watermark = watermark.resize((64, 64))
+    image.paste(watermark, (512-64-4, 4), watermark)
+    return image
 
 @app.route("/iterate", methods=["POST"])
 def predict():
@@ -58,14 +63,17 @@ def predict():
 
     img = dataUriToImage(img)
     images = pipe(prompt, image=img, num_inference_steps=10, image_guidance_scale=1).images
+
+
     
     # img.show()
     # images[0].show()
 
     # return img data url
-    return 'data:image/jpeg;base64,'+pillow_image_to_base64_string(images[0])
+    img = addWatermark(images[0])
+    return 'data:image/jpeg;base64,'+pillow_image_to_base64_string(img)
 
-
+    
     # prompt = "make him wear sunglasses"
     # images = pipe(prompt, image=image, num_inference_steps=10, image_guidance_scale=1).images
 
