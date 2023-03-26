@@ -16,6 +16,7 @@
   let batch: number = 0;
   let scrollToBottom: () => void;
   let message: string | undefined;
+  let userCount: number = 0;
   let profileImage = createAvatar(bottts, {
     seed: Math.random().toString(36).substring(2, 15),
   }).toDataUriSync();
@@ -60,6 +61,7 @@
   let messages: ChatMessage[] = [];
 
   onMount(() => {
+    
     setTimeout(() => {
       if (!img) {
         io.disconnect();
@@ -75,7 +77,11 @@
       batch = nBatch;
       console.log("BATCH: ", batch, "BATCH SIZE: ", batchSize);
     });
+    io.on("userCount", (nUserCount: number) => {
+      userCount = nUserCount;
+    });
     io.on("message", (m: string) => {
+      // alert("MESAGE RECIEVED")
       console.log("batch: ", batch, "batchSize: ", batchSize);
       console.log("RECIEVED MESSAGE");
       console.log(message);
@@ -143,6 +149,11 @@
   <div class="bg-black relative">
     {#if img}
       <img src={img} class="w-full h-[100vh] object-contain" alt="generated" />
+      {#if userCount}
+        <p class="text-white top-4 left-4 absolute">
+          <span class="text-white  font-bold">{userCount}</span> users online
+        </p>
+      {/if}
       {#if batch != null && batchSize != null}
         <div
           class="absolute top-4 right-4 rounded-lg bg-gray-700 bg-opacity-50 p-4"

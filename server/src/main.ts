@@ -18,6 +18,7 @@ app.use(cors());
 import http from "node:http";
 import { appendFileSync } from "fs";
 let s = http.createServer(app);
+let userCount = 0;
 
 let io = new socketio.Server(s, {
   cors: {
@@ -27,10 +28,13 @@ let io = new socketio.Server(s, {
 });
 
 app.get("/", (req: any, res: any) => {
-  res.send("Hello World!");
+  res.send("Hello Worldddd!");
 });
 app.get("/batch", (req: any, res: any) => {
   res.send("BRANCH");
+});
+app.get("/userCount", (req: any, res: any) => {
+  res.send(userCount.toString());
 });
 app.get("/reset", (req: any, res: any) => {
   img = getBaseArt();
@@ -58,15 +62,22 @@ export interface ChatMessage {
 // whenever a user connects on port 3000 via
 // a websocket, log that a user has connected
 let messages: ChatMessage[] = [];
+
 io.on("connection", function (socket) {
+  userCount = io.sockets.sockets.size;
+  io.emit("userCount", userCount);
+  socket.on("disconnect", () => {
+    userCount = io.sockets.sockets.size;
+    io.emit("userCount", userCount);
+  })
   appendFileSync("iplog.txt", socket.handshake.address + "\n");
 
-  console.log("a user connected");
+  // console.log("a user connected");
   io.emit("chat_messages", messages);
   io.emit("ai_image", img);
   io.emit("loading", loading);
 
-  io.on("chat_message", (msg: any) => {
+  socket.on("chat_message", (msg: any) => {
     console.log("message: " + msg);
     appendFileSync(
       "chatlog.csv",
