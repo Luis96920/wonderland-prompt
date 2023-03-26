@@ -20,8 +20,12 @@ However, we log every single user action, ip, and image generated to a file. Ove
 
 ## Getting Started
 
-### Dependencies
+### Hardware
 Currently will not work for non-Apple CPUs. Switch MPS to Cuda if needed. 
+
+
+
+### Dependencies
 
 * pnpm 
 
