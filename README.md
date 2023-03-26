@@ -34,10 +34,10 @@ Currently will not work for non-Apple CPUs. Switch MPS to CUDA if needed.
 
 ### Installation
 
-```pip install generator/requirements.txt``` then ```pnpm i```. 
+In terminal, ```pip install generator/requirements.txt``` then ```pnpm i```. 
 
 
-Open a terminal - ```cd server```, install packages using ```pnpm i``` then run  ```pnpm run dev```.
+Same terminal,  ```cd server```, install packages using ```pnpm i``` then run  ```pnpm run dev```.
 
 
 In a separate terminal - ```cd web```, install packages using ```pnpm i``` then run  ```pnpm run dev```.
