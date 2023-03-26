@@ -4,7 +4,7 @@
   import { onMount } from "svelte";
   import type { ChatMessage } from "../app";
   import { createAvatar } from "@dicebear/core";
-  import { pixelArt } from "@dicebear/collection";
+  import { bottts } from "@dicebear/collection";
   import { generateUsername } from "unique-username-generator";
   import { slide } from "svelte/transition";
   let loading = false;
@@ -12,9 +12,11 @@
   let img: string | undefined | null;
   let username = generateUsername();
   let userId: string;
+  let batchSize: number = 12;
+  let batch: number = 0;
   let scrollToBottom: () => void;
   let message: string | undefined;
-  let profileImage = createAvatar(pixelArt, {
+  let profileImage = createAvatar(bottts, {
     seed: Math.random().toString(36).substring(2, 15),
   }).toDataUriSync();
   function download(dataurl: string, filename: string) {
@@ -43,7 +45,7 @@
     } else {
       // If not, generate a new username, profileImage, and userId
       username = generateUsername();
-      profileImage = createAvatar(pixelArt, {
+      profileImage = createAvatar(bottts, {
         seed: Math.random().toString(36).substring(2, 15),
       }).toDataUriSync();
       userId = Math.random().toString(36).substring(2, 9);
@@ -58,7 +60,23 @@
   let messages: ChatMessage[] = [];
 
   onMount(() => {
+    setTimeout(() => {
+      if (!img) {
+        io.disconnect();
+        io.connect();
+      }
+    }, 1000);
+
+    io.on("batchSize", (nBatchSize: number) => {
+      batchSize = nBatchSize;
+      console.log("BATCH: ", batch, "BATCH SIZE: ", batchSize);
+    });
+    io.on("batch", (nBatch: number) => {
+      batch = nBatch;
+      console.log("BATCH: ", batch, "BATCH SIZE: ", batchSize);
+    });
     io.on("message", (m: string) => {
+      console.log("batch: ", batch, "batchSize: ", batchSize);
       console.log("RECIEVED MESSAGE");
       console.log(message);
       message = m;
@@ -125,6 +143,18 @@
   <div class="bg-black relative">
     {#if img}
       <img src={img} class="w-full h-[100vh] object-contain" alt="generated" />
+      {#if batch != null && batchSize != null}
+        <div
+          class="absolute top-4 right-4 rounded-lg bg-gray-700 bg-opacity-50 p-4"
+        >
+          <div class="flex">
+            <div class="text-white text-sm">{batch}</div>
+            <div class="text-white text-sm">/</div>
+
+            <div class="text-white text-sm">{batchSize}</div>
+          </div>
+        </div>
+      {/if}
       <button
         class="bg-white absolute bottom-4 right-4 p-4 rounded-sm"
         on:click={() => {

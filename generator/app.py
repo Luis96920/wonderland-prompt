@@ -66,7 +66,7 @@ def predict():
     img = dataUriToImage(img)
     images = pipe(prompt, image=img, num_inference_steps=10, image_guidance_scale=1).images
 
-
+    
     images[0].save(f"out/output_{time.time()}.png")
     # img.show()
     # images[0].show()

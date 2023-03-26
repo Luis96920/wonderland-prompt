@@ -10,7 +10,6 @@ let img = getBaseArt();
 let loading = false;
 let batchSize = 12;
 let batch = 0;
-
 const app = express();
 app.set("port", process.env.PORT || 3000);
 
@@ -30,7 +29,9 @@ let io = new socketio.Server(s, {
 app.get("/", (req: any, res: any) => {
   res.send("Hello World!");
 });
-
+app.get("/batch", (req: any, res: any) => {
+  res.send("BRANCH");
+});
 app.get("/reset", (req: any, res: any) => {
   img = getBaseArt();
   loading = false;
@@ -39,6 +40,7 @@ app.get("/reset", (req: any, res: any) => {
 
   res.send("Reset!");
 });
+
 // app.get("/art", (req: any, res: any) => {
 //   res.send(art)
 // });
@@ -64,7 +66,7 @@ io.on("connection", function (socket) {
   io.emit("ai_image", img);
   io.emit("loading", loading);
 
-  socket.on("chat_message", (msg: any) => {
+  io.on("chat_message", (msg: any) => {
     console.log("message: " + msg);
     appendFileSync(
       "chatlog.csv",
@@ -81,6 +83,7 @@ io.on("connection", function (socket) {
       io.emit("ai_image", img);
       batch = 0;
     }
+    
     if (!loading) {
       loading = true;
       io.emit("loading", true);
@@ -104,7 +107,9 @@ io.on("connection", function (socket) {
         .then((res) => res.text())
         .then((res) => {
           img = res;
-          batch += 1;
+          batch = batch + 1;
+         
+          console.log("EMITTED batch");
 
           io.emit("ai_image", res);
           loading = false;
@@ -116,10 +121,14 @@ io.on("connection", function (socket) {
           console.log("ERR", err);
         });
     }
+    io.emit("batch", batch)
+    io.emit("batchSize", batchSize)
   });
 });
 
+
+
 // start our simple server up on localhost:3000
-const server = s.listen(3000, function () {
+const _ = s.listen(3000, function () {
   console.log("listening on http://127.0.0.1:3000");
 });

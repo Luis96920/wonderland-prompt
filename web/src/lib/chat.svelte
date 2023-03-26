@@ -103,7 +103,7 @@
       }}
     >
       <input
-        placeholder="Make him a robot"
+        placeholder="Type your prompt here..."
         class="w-full rounded-lg p-2 focus:outline-none"
         bind:this={promptTextField}
         disabled={loading}
