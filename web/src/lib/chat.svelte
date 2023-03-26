@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { pixelArt } from "@dicebear/collection";
+  import { bottts } from "@dicebear/collection";
   import { createAvatar } from "@dicebear/core";
   import { slide } from "svelte/transition";
   import type { ChatMessage } from "../app";
@@ -26,7 +26,9 @@
   let promptContainer: HTMLElement;
 </script>
 
-<div class="flex flex-col h-[100vh] relative overflow-x-clip w-full text-ellipsis break-all">
+<div
+  class="flex flex-col h-[100vh] relative overflow-x-clip w-full text-ellipsis break-all"
+>
   <div>
     <div
       class="p-4 border-b border-b-gray-300 backdrop-blur-lg absolute w-full bg-white bg-opacity-20 flex"
@@ -51,7 +53,7 @@
           class="h-[40px] w-[40px] rounded-md ml-auto bg-gray-300"
           alt="Profile"
           on:click={() => {
-            profileImg = createAvatar(pixelArt, {
+            profileImg = createAvatar(bottts, {
               seed: Math.random().toString(36).substring(2, 15),
             }).toDataUriSync();
           }}
