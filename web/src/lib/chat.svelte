@@ -85,7 +85,10 @@
     {/each}
     <div class="h-[120px]" />
   </div>
-  <div class="py-4 px-4 bottom-0 w-full bg-gray-100 relative" >
+  <div
+    class="py-4 px-4 bottom-0 w-full bg-gray-100 relative"
+    style="background: linear-gradient(90deg, #E93E3A 0%, #EA70AB 25%, #9680BB 50%, #7B82BF 100%);"
+  >
     <form
       on:submit={() => {
         onSubmit(text);
