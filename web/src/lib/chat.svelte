@@ -26,7 +26,7 @@
   let promptContainer: HTMLElement;
 </script>
 
-<div class="flex flex-col h-[100vh] relative">
+<div class="flex flex-col h-[100vh] relative overflow-x-clip w-full text-ellipsis break-all">
   <div>
     <div
       class="p-4 border-b border-b-gray-300 backdrop-blur-lg absolute w-full bg-white bg-opacity-20 flex"
@@ -60,7 +60,7 @@
     </div>
   </div>
   <div
-    class="mt-auto overflow-y-scroll flex flex-col-reverse"
+    class="mt-auto overflow-y-scroll flex flex-col-reverse w-full"
     bind:this={promptContainer}
   >
     {#each messages as message}
@@ -73,9 +73,9 @@
         <div class="h-[40px] w-[40px] rounded-md bg-gray-300 mr-2">
           <img src={message.profile.avatar} alt={message.profile.name} />
         </div>
-        <div class="flex flex-col">
+        <div class="flex flex-col w-full">
           <div class="text-gray-400 text-xs">{message.profile.name}</div>
-          <div>{message.prompt}</div>
+          <div class=" text-ellipsis overflow-x-hidden">{message.prompt}</div>
           <!-- this is where a timestamp is displayed-->
           <div class="text-gray-400 text-xs opacity-50">
             {timeago.format(new Date(message.timestamp))}

@@ -6,16 +6,23 @@
   import { createAvatar } from "@dicebear/core";
   import { pixelArt } from "@dicebear/collection";
   import { generateUsername } from "unique-username-generator";
+  import { slide } from "svelte/transition";
   let loading = false;
   let textfield = "";
-  let img: string | undefined;
+  let img: string | undefined | null;
   let username = generateUsername();
   let userId: string;
   let scrollToBottom: () => void;
+  let message: string | undefined;
   let profileImage = createAvatar(pixelArt, {
     seed: Math.random().toString(36).substring(2, 15),
   }).toDataUriSync();
-
+  function download(dataurl: string, filename: string) {
+    const link = document.createElement("a");
+    link.href = dataurl;
+    link.download = filename;
+    link.click();
+  }
   // define local storage
   let localStorage: Storage;
 
@@ -51,6 +58,14 @@
   let messages: ChatMessage[] = [];
 
   onMount(() => {
+    io.on("message", (m: string) => {
+      console.log("RECIEVED MESSAGE");
+      console.log(message);
+      message = m;
+      setTimeout(() => {
+        message = undefined;
+      }, 5000);
+    });
     io.on("connect", () => {
       console.log("Connected");
       setTimeout(() => {}, 500);
@@ -107,9 +122,19 @@
 </script>
 
 <div class="sm:grid-cols-[7fr_3fr] grid h-[100vh]">
-  <div class="bg-black">
+  <div class="bg-black relative">
     {#if img}
       <img src={img} class="w-full h-[100vh] object-contain" alt="generated" />
+      <button
+        class="bg-white absolute bottom-4 right-4 p-4 rounded-sm"
+        on:click={() => {
+          if (img) {
+            download(img, "generated.png");
+          }
+        }}
+      >
+        Download
+      </button>
     {/if}
   </div>
   <div class="bg-gray-200 h-full">
@@ -121,8 +146,17 @@
       {loading}
     />
   </div>
+
   <!-- 
   
     </div>
   </div> -->
 </div>
+{#if message}
+  <div
+    class="absolute bottom-4 bg-black text-white p-4 rounded-sm"
+    transition:slide
+  >
+    <p>{message}</p>
+  </div>
+{/if}

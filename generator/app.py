@@ -9,6 +9,7 @@ import io
 import base64
 import io
 from PIL import Image
+import time
 
 
 def pillow_image_to_base64_string(img):
@@ -48,6 +49,7 @@ def hello():
 def addWatermark(image):
     watermark = Image.open("img.png")
     watermark = watermark.resize((64, 64))
+   
     image.paste(watermark, (512-64-4, 4), watermark)
     return image
 
@@ -65,13 +67,13 @@ def predict():
     images = pipe(prompt, image=img, num_inference_steps=10, image_guidance_scale=1).images
 
 
-    
+    images[0].save(f"out/output_{time.time()}.png")
     # img.show()
     # images[0].show()
 
     # return img data url
-    img = addWatermark(images[0])
-    return 'data:image/jpeg;base64,'+pillow_image_to_base64_string(img)
+   # img = addWatermark(images[0])
+    return 'data:image/jpeg;base64,'+pillow_image_to_base64_string(images[0])
 
     
     # prompt = "make him wear sunglasses"
