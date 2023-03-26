@@ -18,4 +18,25 @@ We used Socket.io for our web-socket implementation. We used Svelte for our fron
 However, we log every single user action, ip, and image generated to a file. Over the course of the past few hours since we've lost, more than 20 people have generated over 200 unique images together.
 
 
+## Getting Started
 
+### Dependencies
+Currently will not work for non-Apple CPUs. Switch MPS to Cuda if needed. 
+
+* pnpm 
+
+  ```npm install -g pnpm```
+
+
+### Installation
+
+```pip install generator/requirements.txt``` then ```pnpm i```. 
+
+
+Open a terminal - ```cd server```, install packages using ```pnpm i``` then run  ```pnpm run dev```.
+
+
+In a separate terminal - ```cd web```, install packages using ```pnpm i``` then run  ```pnpm run dev```.
+
+
+Click localhost link provided.
