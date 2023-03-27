@@ -15,8 +15,6 @@ The NodeJS server is our central logic server. It handles all web-socket connect
 
 We used Socket.io for our web-socket implementation. We used Svelte for our frontend, Tailwind because CSS sucks. We decided not to use a database, and store all memory locally.
 
-However, we log every single user action, ip, and image generated to a file. Over the course of the past few hours since we've lost, more than 20 people have generated over 200 unique images together.
-
 
 ## Getting Started
 
