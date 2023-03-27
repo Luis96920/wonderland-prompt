@@ -32,11 +32,10 @@ Currently will not work for non-Apple CPUs. Switch MPS to CUDA if needed.
   ```npm install -g pnpm```
 
 
-### Installation
+### Installation [NOT DONE EXPLORING ngrok]
 
-In terminal - ```pip install wonderlands/generator/requirements.txt.
+In terminal - ```pip install -r generator/requirements.txt.
 
-[NOT DONE]
 
 Same terminal - ```cd server```, install packages using ```pnpm i``` then run  ```pnpm run dev```.
 
