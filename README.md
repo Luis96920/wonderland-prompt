@@ -34,8 +34,9 @@ Currently will not work for non-Apple CPUs. Switch MPS to CUDA if needed.
 
 ### Installation
 
-In terminal - ```pip install generator/requirements.txt``` then ```pnpm i```. 
+In terminal - ```pip install wonderlands/generator/requirements.txt.
 
+[NOT DONE]
 
 Same terminal - ```cd server```, install packages using ```pnpm i``` then run  ```pnpm run dev```.
 
