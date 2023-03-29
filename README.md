@@ -20,7 +20,7 @@ Unfortunately, we did not have access to a cloud platform to host our AI engine.
 
 Beyond that, with no could credits we weren't able to get a domain, or any ssl. To still share our collaborative spirit, we figured out how to host locally on the Polsky Lan Wifi, and one of our local computer was able to hold sockets open with 22 computers at once while running the AI.
 
-## What's next
+## What's Next
 Exploring cloud platforms to host AI engine. 
 
 Drafting methods to deploy application world-wide. ```ngrok``` may be a temporary solution. 
