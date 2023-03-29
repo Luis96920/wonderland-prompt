@@ -51,7 +51,7 @@ Separate terminal - ```cd server```, install packages using ```pnpm i``` then ru
 In another separate terminal - ```cd web```, install packages using ```pnpm i``` then run  ```pnpm run dev```.
 
 
-Click localhost link provided ```http://127.0.0.1:5173/```
+Click localhost link provided and share with friends (on the same network for now)! ```http://127.0.0.1:5173/```
 
 ## Other
 [Devpost Link](https://devpost.com/software/wonderland-ykjtug)
